@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Overshop</title>
+
+
+</head>
+<body>
+    
+    
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    
+
+
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+<foot>
+    <div class="bg-light p-4 rounded-1">
+        <h5>Informacion de Contacto</h5>
+        <p>Carrera 20 #05-50</p>
+        <div>
+            <a href="#">+57 3228796506</a>
+        </div>
+        <div>
+            <span><a asp-action="Contacto" asp-controller="Iniciarsesion">Contactanos</a></span> <br>
+        </div>
+        <div>
+            <a href="#">Redes Sociales</a>
+        </div>
+    </div>
+       
+    
+</foot>
+</html>

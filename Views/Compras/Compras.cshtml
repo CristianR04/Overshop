@@ -1,0 +1,129 @@
+﻿@model ingresarcompra
+@{
+    Layout = null;
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        .fondo {
+            background: url('/html/fondo.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="fondo align-items-baseline">
+    <div class="container">
+        <h1>Registro de Compras</h1>
+        <form asp-action="Compras" asp-controller="Compras" method="post">
+            <div class="mb-3">
+                <label for="Fecha" class="form-label">Fecha</label>
+                <input asp-for="fecha" type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")"
+                       value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+            </div>
+            <div class="mb-3">
+                <label for="Codigo" class="form-label">Código</label>
+                <input asp-for="Idproveedor" type="text" class="form-control" id="Idproveedor" required />
+            </div>
+            <div class="mb-3">
+                <label for="Proveedor" class="form-label">Proveedor</label>
+                <input asp-for="Empresa" type="text" class="form-control" id="Empresa" required />
+            </div>
+            <div class="mb-3 mt-4">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID Producto</th>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                            <th>Valor por Unidad</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productosTable">
+                        <tr>
+                            <td><input asp-for="Id" type="text" class="form-control" name="Id" /></td>
+                            <td><input asp-for="Nombre" type="text" class="form-control" name="Nombre" /></td>
+                            <td><input asp-for="Cantidad" type="number" class="form-control" min="0" /></td>
+                            <td><input asp-for="valor" type="number" class="form-control" min="0" /></td>
+                            <td><input asp-for="Valortotal" type="number" class="form-control" min="0" readonly /></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar Compra</button>
+        </form>
+        <form asp-action="menusuario" asp-controller="Home">
+
+            <button type="submit" class="btn btn-danger">Salir</button>
+
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+
+        $('#Idproveedor').on('keydown', function (event) {
+            if (event.key === 'Tab') {
+                const Id = $(this).val();
+                if (Id.length > 2) {
+
+                    $.ajax({
+                        url: '/Compras/detalleProveedor',
+                        type: 'GET',
+                        data: { Id: Id },
+                        success: function (response) {
+
+                            if (response) {
+                                $('#Empresa').val(response);
+
+                            } else {
+                                $('#proveedorInfo').addClass('d-none');
+                            }
+                        },
+                        error: function () {
+                            alert('Error al obtener los datos del proveedor.');
+                        }
+                    });
+                }
+            }
+        });
+
+        // Esta función se ejecutará cada vez que un input cambie
+        function calcularTotal() {
+            // Obtener los valores de los inputs
+            var cantidad = parseFloat(document.getElementById('Cantidad').value) || 0; // Si no hay valor, se considera 0
+            var valor = parseFloat(document.getElementById('valor').value) || 0; // Si no hay valor, se considera 0
+
+            // Realizar la multiplicación
+            var total = cantidad * valor;
+
+            // Asignar el resultado al campo Valortotal
+            document.getElementById('Valortotal').value = total.toFixed(2);  // Redondear a 2 decimales
+        }
+
+        // Agregar eventos para detectar cambios en los inputs
+        document.getElementById('Cantidad').addEventListener('input', calcularTotal);
+        document.getElementById('valor').addEventListener('input', calcularTotal);
+
+
+
+    </script>
+</body>
+</html>

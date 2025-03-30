@@ -1,0 +1,120 @@
+﻿@model proveedormodel
+@{
+    Layout = null;
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .fondo {
+            background: url('/html/fondo.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body class ="fondo">
+    <div class="container">
+        <div class="text-center fs-1 fw-bold mt-2">Proveedor</div>
+        <form asp-action="Proveedor" asp-controller="Proveedores" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mt-2">
+                <input asp-for="Nombres" type="text" class="form-control bg-light" required placeholder="Nombre Del Proveedor">
+            </div>
+            <span asp-validation-for="Nombres" class="text-danger"></span>
+            <!-- Número de Identificación del Proveedor -->
+            <div class="form-group mt-2">
+                <input asp-for="Idproveedor" type="text" class="form-control bg-light" required placeholder="Identificacion Del Proveedor">
+            </div>
+            <span asp-validation-for="Idproveedor" class="text-danger"></span>
+            <!-- Nombre de la Empresa que Representa -->
+            <div class="form-group mt-2">
+
+                <input asp-for="Empresa" type="text" class="form-control bg-light" required placeholder="Empresa">
+            </div>
+            <span asp-validation-for="Empresa" class="text-danger"></span>
+
+            <div class="form-group mt-2">
+
+                <input asp-for="CorreoEmpresa" type="email" class="form-control bg-light" required placeholder="Correo De La Empresa">
+            </div>
+            <span asp-validation-for="CorreoEmpresa" class="text-danger"></span>
+            <!-- telefono_empresa -->
+            <div class="form-group mt-2">
+
+                <input asp-for="TelefonoEmpresa" type="text" class="form-control bg-light" required placeholder="Telefono De La Empresa">
+            </div>
+            <span asp-validation-for="TelefonoEmpresa" class="text-danger"></span>
+            
+            <!-- Dirección del Proveedor -->
+            <div class="form-group mt-2">
+                <input asp-for="Direccion" type="text" class="form-control bg-light" required placeholder="Direccion">
+            </div>
+            <span asp-validation-for="Direccion" class="text-danger"></span>
+
+            <!-- Teléfono del Proveedor -->
+            <div class="form-group mt-2">
+                <input asp-for="Telefono" type="tel" class="form-control bg-light" required placeholder="Telefono">
+            </div>
+            <span asp-validation-for="Telefono" class="text-danger"></span>
+
+            <!-- Correo Electrónico -->
+            <div class="form-group mt-2">
+                <input asp-for="Correoprov" type="email" class="form-control bg-light" required placeholder="Correo Proveedor">
+            </div>
+            <span asp-validation-for="Correoprov" class="text-danger"></span>
+            <!-- Tipo de Proveedor -->
+            <div class="form-group mt-2">
+                <select asp-items="Html.GetEnumSelectList<tipoproveedor>()" asp-for="TipoProv" class="form-select form-control bg-light"></select>
+            </div>
+            <span asp-validation-for="TipoProv" class="text-danger"></span>
+            <!-- Comentarios adicionales -->
+            <div class="form-group mt-2">
+                <textarea id="comentarios" name="comentarios" rows="4" class="form-control bg-light" placeholder="Comentarios adicionales sobre el proveedor"></textarea>
+            </div>
+
+            <!-- Botón de envío -->
+            <div class="form-group d-flex justify-content-center m-4">
+                <input type="submit" class="btn btn-success" value="Registrar">
+            </div>
+            
+            
+
+        </form>
+        <form asp-action="menusuario" asp-controller="Home">
+            <div class="form-group d-flex justify-content-center mt-2">
+                <input class=" btn btn-danger " type="submit" value="Volver">
+            </div>
+        </form>
+        
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>
